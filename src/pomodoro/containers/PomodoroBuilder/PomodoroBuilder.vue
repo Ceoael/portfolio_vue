@@ -45,6 +45,7 @@ import ButtonWrapper from './../../components/ButtonsWrapper/ButtonsWrapper.vue'
 
 import { ref, computed, watch } from 'vue';
 import { useStore } from 'vuex';
+import { onBeforeRouteLeave } from 'vue-router';
 
 export default {
     name: 'PomodoroBuilder',
@@ -130,6 +131,7 @@ export default {
                 playSound();
                 countdownIsRunning.value = false;
                 clearInterval(timer);
+                
 
                 if (interval.value > 1) {
                     longBreakIsActive.value = false;
@@ -167,6 +169,21 @@ export default {
 
             return `${formatted(min)}:${formatted(sec)}`;
         }
+
+        onBeforeRouteLeave(() => {
+            let answear = true;
+
+            if (countdownIsRunning.value)
+            { 
+               answear = window.confirm(
+                'Do you really want to leave? Pomodoro clock will be stopped.'
+                );
+            }
+
+            if (!answear) return false;
+            
+            clearInterval(timer);
+        })
 
         return {
             alarmSound,
