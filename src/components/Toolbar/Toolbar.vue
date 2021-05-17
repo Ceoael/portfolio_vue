@@ -1,0 +1,70 @@
+<template>
+    <nav class="toolbar">
+        <button class="toolbar__button" @click="openMenu">
+            <span class="material-icons" :class="'toolbar__icon'">menu</span>
+        </button>
+        <button class="toolbar__button" @click="homeRoute">
+            <span class="material-icons" :class="'toolbar__icon'">home</span>
+        </button>
+    </nav>
+</template>
+
+<script>
+export default {
+    name: "Button",
+    emits: ['openSideDrawer'],
+    methods: {
+        homeRoute() {
+            this.$router.push('/');
+        },
+        openMenu() {
+            this.$emit('openSideDrawer');
+        }
+    }
+}
+</script>
+
+<style scoped>
+* {
+    --textColor: #E7E7EB;
+    --darkPurple: #100E1D;
+}
+
+.toolbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    display: flex;
+
+    padding: 10px;
+    background: #1E213A;
+
+    z-index: 10;
+}
+.toolbar__button {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+
+    padding: 5px;
+    margin: 0 5px;
+
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 5px;
+
+    cursor: pointer;
+    transition: .3s all ease-in-out;
+}
+.toolbar__button:hover,
+.toolbar__button:active {
+    border: 1px solid var(--textColor);
+    background: var(--darkPurple);
+}
+.toolbar__icon {
+    font-size: 30px;
+    color: var(--textColor);
+}
+</style>
